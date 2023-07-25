@@ -12,3 +12,7 @@ target_compile_options(move PRIVATE -fno-elide-constructors)
 
 add_executable(u_ptr u_ptr.cpp)
 target_compile_options(u_ptr PRIVATE -fno-elide-constructors)
+
+add_executable(new_free new_free.cpp)
+
+add_executable(polymorphism polymorphism.cpp)
