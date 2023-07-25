@@ -18,7 +18,7 @@ void func(A &&a){
 }
 
 A&& mock_move(A &a){
-    return reinterpret_cast<A&>(a);
+    return reinterpret_cast<A&&>(a);
 }
 
 int main(){
