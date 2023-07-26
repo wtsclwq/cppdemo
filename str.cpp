@@ -12,7 +12,7 @@ public:
     }
 
     // constructor for const char *
-    explicit Str(const char *str){
+    Str(const char *str){
         std::cout << "[arg] constructor for const char *" << std::endl;
         length_ = std::strlen(str);  // do not count '\0'
         capacity_ = std::max(length_ + 1, DEFAULT_CAPACITY); // need to save '\0'
@@ -33,14 +33,6 @@ public:
         other.length_ = 0;
         other.capacity_ = 0;
         other.raw_str_ = nullptr;
-    }
-
-    // assign operator for const char *
-    auto operator=(const char *str) -> Str&{
-        std::cout << "assign operator for const char *" << std::endl;
-        auto temp = Str(str);
-        temp.swap(*this);
-        return *this;
     }
 
     // assign operator for both copy and move
@@ -100,6 +92,17 @@ public:
         return raw_str_[index];
     }
 
+    auto operator+(const Str& other) ->Str{
+        size_t new_length = length_ + other.length_;
+        size_t new_capacity = std::max(capacity_, new_length + 1);
+        char* new_raw_str = new char[new_capacity]{};
+
+        std::strcpy(new_raw_str, raw_str_);
+        std::strcat(new_raw_str, other.raw_str_);
+
+        return {new_raw_str};
+    }
+
     friend auto operator<<(std::ostream& os, const Str& str) -> std::ostream&{
         os << str.c_str();
         return os;
@@ -130,5 +133,11 @@ int main(){
     sss.push_back('a');
     std::cout << sss << std::endl;
     sss.pop_back();
-    std::cout << sss;
+    std::cout << sss << std::endl;
+
+    Str str3 = "Hello, ";
+    Str str4 = "World!";
+    Str str5 = str3 + str4;
+    std::cout << "str3: " << str5 << std::endl;
+
 }
